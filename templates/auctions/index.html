@@ -1,0 +1,58 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+ {% include 'manage/carousel.html' %}
+    <section class="price_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          Yardımlaşma Listesi
+        </h2>
+      </div>
+      <div class="price_container">
+          {% for obj in objects %}
+        <div class="box"{% if obj.active != True %}style="background-color: rgba(255, 220, 220, 0.7);"
+            {% endif %}>
+          <div class="name">
+            <h6>
+              {{ obj.name }}
+
+            </h6>
+          </div>
+          <div class="img-box">
+            <img src="{{ obj.image1.url }}" alt="">
+          </div>
+          <div class="detail-box">
+
+             <h6>Fiyat: TL <strong>{{ obj.startBid }}</strong></h6>
+                <small>Başlangıç Tarihi: <strong>{{ obj.date|date:"d-m-Y" }}</strong></small><br>
+                <small>Bitiş tarihi : <strong>{{ obj.ended|date:"d-m-Y" }}</strong></small><br>
+                     {% if obj.active and obj.remaining_minutes > 2 %}
+                    <span class="badge status--active">Aktif</span>
+                    {% else %}
+                    <span class="badge status--active">Günü Geçmiş </span>
+                    <div class="auction-card-value">{{ obj.final_value }}$</div>
+                     {% endif %}
+
+                {% if obj in user.watchlist.all %}
+                <span class="badge status--watching">İzleme Listesinde</span><br>
+                {% else %}
+                <span class="badge status--notwatching">İzlenmiyor</span>
+                {% endif %}
+
+          <br>
+
+            <a href="{% url 'details' obj.id %}">
+                <h6>Açıklama</h6>
+
+            </a>
+          </div>
+        </div>
+          {% empty %}
+       <div class="alert alert-info text-center p-4 my-4 mx-2">Aktif Yardımlaşma  Yok</div>
+    {% endfor %}
+
+    </div>
+  </section>
+
+  <!-- end price section -->
+{% endblock %}

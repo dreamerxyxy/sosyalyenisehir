@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="Sosyal Yardımlaşma Sitesi" />
+  <meta name="description" content="Sosyal Yardımlaşma Sitesi" />
+  <meta name="author" content="Sosyal Yardımlaşma Sitesi" />
+
+  <title>Sosyal Yardımlaşma Sitesi </title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href= "{% static '/css/bootstrap.css'%}">
+
+  <!-- fonts style -->
+
+  <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Poppins:400,600,700&display=swap" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="{% static '/css/style.css'%}" rel="stylesheet">
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css'%}" rel="stylesheet">
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="{% url 'index' %}">
+            <img src="{% static 'images/Logo.png'%} " alt="">
+            <span>Sosyal Yenişehir</span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav  ">
+               <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">
+                            Aktif Yardımlaşma Listesi
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'categories' %}">
+                            Kategori
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">
+                            İletişim
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                     <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Özelleştirmek</a>
+                     <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{% url 'createListing' %}">Yardımlaşma Oluşturma</a>
+                      <a class="dropdown-item" href="{% url 'watch' %}">İzleme Listesi <span class="badge badge-light">( {{ user.watchlist.all.count }} )</span> </a>
+                      <a class="dropdown-item" href="{% url 'my_auctions' %}">Yardımlaşma Listem</a>
+                         <a class="dropdown-item" href="{% url 'my_bids' %}#">Tekliflerim </a>
+                 {% if user.is_verified == False %}         <a class="dropdown-item" href="{% url 'verify_code' %}#">Telefon Doğrulama </a>  {% endif %}
+                     </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            {% if user.is_authenticated %}
+                            Giriş yapıldı <strong>{{ user.username }}</strong>.
+                            {% else %}
+                            Oturum açılmamış.
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Çıkış</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Giriş</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Kaydolma</a>
+                    </li>
+                    {% endif %}
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+
+  </div>
+
+<div class="container container-body">
+        {% block body %}
+
+        {% endblock %}
+    </div>
+  <section class="info_section ">
+    <div class="container">
+      <div class="info_container">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="info_logo">
+              <a href="">
+                <img src="{% static 'images/logo.png'%}" alt="">
+                <span>
+                  Sosyal Yenişehir
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="info_contact">
+              <a href="">
+                <img src="{% static 'images/location.png'%}" alt="">
+                <span>
+                  Adres
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="info_contact">
+              <a href="">
+                <img src="{% static 'images/phone.png'%}" alt="">
+                <span>
+                  +90 507 966 39 84
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="info_contact">
+              <a href="">
+                <img src="{% static 'images/mail.png'%}" alt="">
+                <span>
+                  nezihyikar@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="info_form">
+          <div class="d-flex justify-content-center">
+            <h5 class="info_heading">
+              Bize yazın
+            </h5>
+          </div>
+          <form action="">
+            <div class="email_box">
+              <label for="email2">Mail Adresiniz</label>
+              <input type="text" id="email2">
+            </div>
+            <div>
+              <button>
+                ABONE OL
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="info_social">
+          <div class="d-flex justify-content-center">
+            <h5 class="info_heading">
+              Bizi Takip Edin
+            </h5>
+          </div>
+          <div class="social_box">
+            <a href="">
+              <img src="{% static 'images/fb.png'%}" alt="">
+            </a>
+            <a href="">
+              <img src="{% static 'images/twitter.png'%}" alt="">
+            </a>
+            <a href="">
+              <img src="{% static 'images/linkedin.png'%}" alt="">
+            </a>
+            <a href="">
+              <img src="{% static 'images/insta.png'%}" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- footer section -->
+
+  <script type="text/javascript" src="{% static '/js/jquery-3.4.1.min.js'%}"></script>
+  <script type="text/javascript" src="{% static '/js/bootstrap.js'%}"></script>
+  <script type="text/javascript" src="{% static '/js/custom.js'%}"></script>
+</body>
+
+</html>

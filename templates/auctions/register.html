@@ -1,0 +1,46 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="container p-4 text-center" style="max-width: 600px;">
+
+    {% if message %}
+    <div class="alert alert-danger">{{ message }}</div>
+    {% endif %}
+
+    <div class="card inout">
+        <div class="card-body m-4">
+            <h2 class="card-title">Kayıt Olma</h2>
+
+            <form action="{% url 'register' %}" method="post" class="card-text mb-3">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control" autofocus type="text" name="username" placeholder="Kullanıcı Adı">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="email" name="email" placeholder="Email Adresi">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="number" name="age" placeholder="Yaş">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="tel" name="phone" placeholder="Telefon">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="adres" placeholder="Adres Bilgileri">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="Şifre">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="confirmation" placeholder="Şifre Onayı">
+                </div>
+                <input class="btn-danger py-lg-2" type="submit" value="Kaydol">
+            </form>
+
+            Hesabınız yok mu? <a href="{% url 'login' %}">Giriş için </a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

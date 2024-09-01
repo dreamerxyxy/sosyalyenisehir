@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2> Tekliflerim </h2>
+{% if my_bids_list %}
+<ul class="my-bid-list">
+    {% for bid in my_bids_list %}
+        <li class="my-bid-li"><a class="my-bid-link" href="{% url 'details' bid.auctionListing.id %}"> {{ bid.auctionListing  }}</a>
+            <hr>
+            <div class="my-bid-label">
+                Son Teklifim: {{ bid.bidvalue }}$
+                <div class="my-bid-date">({{ bid.date }})</div>
+            </div>
+            {% if bid.auctionListing.active %}
+                <div class="my-bid-status-active">Askıda Olan </div>
+            {% else %}
+                {% if bid.auctionListing.winner and bid.auctionListing.winner == user %}
+                    <div class="my-bid-status-won">Kazandınız  {{ bid.amount }}$</div>
+                {% else %}
+                    <div class="my-bid-status-lost">Kaybettiniz</div>
+                {% endif %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <h4>No bids are available.</h4>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div class="container p-4 text-center" style="max-width: 600px;">
+
+<h1>Hesabınızı doğrulayın</h1>
+<p>lütfen telefonunuza gelen kodu giriniz</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Doğrulama</button>
+  </form>
+
+</div>
+
+{% endblock %}

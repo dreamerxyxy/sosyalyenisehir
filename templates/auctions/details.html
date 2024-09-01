@@ -1,0 +1,222 @@
+{% extends 'auctions/layout.html'%}
+
+{% block title %}
+{{ item.name }}
+{% endblock %}
+
+{% block body %}
+
+<section class="client_section">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+            Ürün Detayı
+
+        </h2>
+      </div>
+      <h4 class="secondary_heading">
+        {{ item.name }}
+      </h4>
+      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="client_container">
+              <div class="client-id">
+                <div class="img-box">
+                  <img src="{{ item.image1.url }}" alt="">
+                </div>
+                <div class="name">
+                  <h5>
+                     Başlangıç Teklifi:
+                  </h5>
+                  <h6>
+                    {{ item.startBid }}
+                  </h6>
+                </div>
+              </div>
+              <div class="detail-box">
+                <p>
+
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="client_container">
+              <div class="client-id">
+                <div class="img-box">
+                  <img src="{{ item.image2.url }}" alt="">
+                </div>
+                <div class="name">
+                  <h5>
+                      Başlangıç Teklifi:
+                  </h5>
+                  <h6>
+                   {{ item.startBid }}
+                  </h6>
+                </div>
+              </div>
+              <div class="detail-box">
+                <p>
+
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="client_container">
+              <div class="client-id">
+                <div class="img-box">
+                  <img src="{{ item.image3.url }}" alt="">
+                </div>
+                <div class="name">
+                  <h5>
+                   Start Bid :
+                  </h5>
+                  <h6>
+                     {{ item.startBid }}
+                  </h6>
+                </div>
+              </div>
+              <div class="detail-box">
+                <p>
+
+                </p>
+              </div>
+            </div>
+          </div>
+            <div class="carousel-item">
+            <div class="client_container">
+              <div class="client-id">
+                <div class="img-box">
+                  <img src="{{ item.image4.url }}" alt="">
+                </div>
+                <div class="name">
+                  <h5>
+                    Başlangıç Teklifi:
+                  </h5>
+                  <h6>
+                     {{ item.startBid }}
+                  </h6>
+                </div>
+              </div>
+              <div class="detail-box">
+                <p>
+
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Önceki</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Sonraki</span>
+        </a>
+      </div>
+<div class="item-description">
+        {{ item.description }}
+    </div>
+    <div class="bid">
+          Başlangıç Teklifi: <strong>TL {{ item.startBid }}</strong>
+    </div>
+    {% for bid in bids %}
+    <div class="text-center">{{ bid.user.username }} bid <strong>{{ bid.bidValue }}</strong> at
+        {{ bid.date|date:'M d, h:i a' }}</div>
+    {% empty %}
+    <div class="alert alert-warning text-center">
+        No Bids Yet!
+    </div>
+    {% endfor %}
+
+    <section class="my-3">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+        {% if bid and item.active == False %}
+
+        <div class="alert alert-dark text-center">
+            {% if bid.user.username == user.username %}
+            Müzayedeyi Kazandınız!
+            {% else %}
+            <strong>{{ bid.user.username }}</strong> bir teklifle kazandı. <strong>TL{{ bid.bidValue }}</strong>
+            {% endif %}
+        </div>
+
+        {% endif %}
+
+        {% if item.active and user.is_authenticated %}
+        <form action="{% url 'bid' item.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="number" name="bid" class="form-control" placeholder="Teklif" step=".01">
+            </div>
+            <div class="row justify-content-around">
+                <button class="btn btn-primary" type="submit">Teklif Ver</button>
+                {% if item.user.username == user.username %}
+                <a href="{% url 'end' item.id %}">
+                    <button class="btn btn-warning" type="button">Müzayedeyi Sonlandır</button>
+                </a>
+                {% endif %}
+            </div>
+        </form>
+        {% endif %}
+    </section>
+
+    <section>
+        Details:
+        <ul>
+            <li>Listeleyen: <strong>{{ item.user.username }}</strong></li>
+            <li>Kategori: <strong>{{ item.category.name }}</strong></li>
+            <li>Listelenen: <strong>{{ item.date }}</strong></li>
+        </ul>
+    </section>
+
+    <section>
+        Comments:
+        {% for comment in comments %}
+        <div class="card comment">
+            <div class="card-body">
+                <div class="card-title">
+                    <strong>{{ comment.user.username }}</strong>: {{ comment.commentValue }}
+                </div>
+                <div class="card-text">
+                    <small>Yorumlandı: <strong>{{ comment.date|date:'M d, h:i a' }}</strong></small>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info mt-2">
+            Henüz yorum yok
+        </div>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+        <form action="{% url 'comment' item.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <textarea name="content" rows="4" class="form-control" placeholder="Enter a comment"></textarea>
+            </div>
+            <button class="btn btn-dark py-2 px-4" type="submit">Comment</button>
+        </form>
+
+        <form action="{% url 'watchlist' %}" method="post" class="add-category">
+            {% csrf_token %}
+            <input type="hidden" name="item" value="{{ item.id }}">
+            <input type="hidden" value="{% if item in user.watchlist.all %}0{% else %}1{% endif %}" name="status">
+            <button class="btn-danger py-lg-2" type="submit">
+                {% if item in user.watchlist.all %}Kaldır {% else %}Ekle {% endif %} İzlenecekler listesi
+            </button>
+        </form>
+        {% endif %}
+    </section>
+
+    </div>
+  </section>
+{% endblock %}

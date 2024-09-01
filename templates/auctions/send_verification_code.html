@@ -1,0 +1,15 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<<div class="container p-4 text-center" style="max-width: 600px;">
+
+  <form method="post" action="{% url 'send_verification_code' %}">
+    {% csrf_token %}
+    <label for="phone_number">Telefon Numarası:</label>
+    <input type="text" name="phone_number" Giriniz>
+    <button type="submit">Onay Kodu Gönder</button>
+</form>
+</div>
+
+{% endblock %}

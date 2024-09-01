@@ -1,0 +1,84 @@
+{% extends "auctions/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Create Listing
+{% endblock %}
+
+{% block body %}
+
+<div class="pt-4 mt-4">
+    <form action="{% url 'createListing' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+         {{form.as_p }}
+
+        <div class="form-row form-group mt-2">
+            <div class="col">
+                <label for="title">Title</label>
+                <input autofocus type="text" placeholder="Başlık Bilgisi" name="title" class="form-control">
+            </div>
+            <div class="col">
+                <label for="startBid">Başlangıç Fiyatı TL </label>
+                <input type="number" name="startBid" class="form-control" placeholder="0.0" step=".01">
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <label for="description">Açıklama</label>
+            <textarea class="form-control" name="description" rows="3"
+                placeholder="Ürün Açıklamasını Girin"></textarea>
+        </div>
+        <div class="form-row form-group mt-2">
+
+        <div class="col">
+                <label for="image1">Resim1</label>
+               <input type="file" name="image1" id="image1" accept="image/jpeg" class="form-control">
+            </div>
+
+               <div class="col">
+            <label for="image2">Resim2</label>
+               <input type="file" name="image2" id="image2" accept="image/jpeg" class="form-control">
+            </div>
+        </div>
+                <div class="form-row form-group mt-2">
+
+          <div class="col">
+        <label for="image3">Resim3</label>
+               <input type="file" name="image3" id="image3" accept="image/jpeg" class="form-control">
+            </div>
+             <div class="col">
+        <label for="image4">Resim4</label>
+               <input type="file" name="image4" id="image4" accept="image/jpeg" class="form-control">
+            </div>
+                 </div>
+
+    <div class="form-row form-group mt-2">
+
+          <div class="col">
+        <label for="date">Başlangıç Tarihi Saat</label>
+               <input type="datetime-local" name="date"  placeholder="Başlangıç Tarih ve Saati" class="form-control">
+            </div>
+             <div class="col">
+        <label for="ended">Bitiş Tarihi Saat </label>
+               <input type="datetime-local" name="ended"  placeholder="Bitiş Tarih ve Saati"class="form-control">
+            </div>
+                 </div>
+
+            <div class="col">
+                <label for="category">Kategori</label>
+                <select class="form-control" name="category">
+                    {% for category in categories %}
+                    <option value={{ category }}>
+                        {{ category.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn-danger py-lg-2">Gönder</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

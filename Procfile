@@ -1,0 +1,1 @@
+web: gunicorn sosyalyenisehir.wsgi --log-file -

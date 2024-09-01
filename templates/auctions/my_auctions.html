@@ -1,0 +1,37 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2> Müzayedelerim </h2>
+{% if my_auctions_list %}
+    <ul class="my-auction-list">
+    {% for auction in my_auctions_list %}
+        <li class="my-auction-li"><a class="my-auction-link" href="{% url 'details' auction.id %}">{{ auction.name }}</a>
+            <hr>
+            <div class="my-auction-date">Oluşturma Tarihi: {{ auction.date }}</div>
+            {% if auction.active %}
+                <span class="my-auction-status-active">
+                    Askıda Olan
+                </span>
+                <span class="my-auction-value">
+                    {{ auction.startBid }}$
+                </span>
+            {% else %}
+                {% if auction.final_value %}
+                <span class="my-auction-status-resolved">
+                    Final value: {{ auction.final_value }}$
+                </span>
+                {% else %}
+                <span class="my-auction-status-no_winner">
+                    Kazanan Yok
+                </span>
+                {% endif %}
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <h4>Aktif Müzayede Yok.</h4>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div class="container p-4 text-center" style="max-width: 600px;">
+
+   {% if message %}
+    <div class="alert alert-danger">{{ message }}</div>
+    {% endif %}
+
+     <div class="card inout">
+        <div class="card-body m-4">
+            <h2 class="card-title">Giriş</h2>
+
+            <form action="{% url 'login' %}" method="post" class="card-text mb-3">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="username" placeholder="Kullanıcı Adı">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="Şifre">
+                </div>
+                <input class="btn-danger py-lg-2" type="submit" value="Giriş">
+            </form>
+
+            Hesabınız Yok Mu? <a href="{% url 'register' %}"><strong>Kullanıcı Kaydı</strong></a>
+            <p></p>
+
+            Şifre Sıfırlama  <a href="{% url 'password_reset' %}"><strong>Şifre Sıfırlama</strong></a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
