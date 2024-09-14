@@ -19,12 +19,13 @@ STOK=[
 
 DEFAULT_STATUS = 'Cenaze'
 ETKINLIK=[
-    ('Cenaze','Cenaze'),
-    ('Mevlüt','Mevlüt'),
-    ('Organizasyon','Organizasyon'),
-    ('Dernek','Dernek'),
-    ('Muhtarlık','Muhtarlık'),
     ('Belediye', 'Belediye'),
+    ('Cenaze','Cenaze'),
+    ('Dernek', 'Dernek'),
+    ('Etkinlik', 'Etkinlik'),
+    ('Mevlüt','Mevlüt'),
+    ('Muhtarlık', 'Muhtarlık'),
+    ('Organizasyon','Organizasyon'),
     ('Yardımlaşma', 'Yardımlaşma'),
 
 ]
@@ -58,6 +59,7 @@ class Makale(models.Model):
     teslimalansoyad = models.CharField(max_length=50, verbose_name='Soyad')
     teslimalantelefon = models.CharField(max_length=20, blank=False, help_text='Lütfen Numaranızı Giriniz', verbose_name='Telefon')
     teslimalanadres = models.CharField(max_length=250, verbose_name='Adres')
+    image = models.ImageField(upload_to='image', null=True, blank=True, verbose_name='Resim Yükleme')
     alinanmasa = models.PositiveIntegerField(null=True, blank=True, verbose_name='Alınan  Masa')
     alinansandalye = models.PositiveIntegerField(null=True, blank=True, verbose_name='Sandalye')
     alinansemaver = models.PositiveIntegerField(null=True, blank=True, verbose_name='Semaver')
@@ -164,7 +166,7 @@ class AuctionListing(models.Model):
                                related_name="auction_winner",
                                related_query_name="auction_winner")
     final_value = models.IntegerField(blank=True, null=True)
-    image1 = models.FileField(
+    image1 = models.ImageField(
         upload_to='image',
         null=True,
         blank=True,

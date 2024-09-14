@@ -7,7 +7,7 @@ class MakaleAdmin(ImportExportModelAdmin):
     list_per_page = 50
     list_filter = ['Etkinlikturu', 'teslimtarihi','aktif']
     date_hierarchy = 'teslimtarihi'
-    search_fields = ('teslimedenpersonel', 'teslimalanad', 'teslimalansoyad')
+    search_fields = ( 'teslimalanad', 'teslimalansoyad')
     list_display_links = ('Etkinlikturu', 'teslimedenpersonel', 'teslimalanad', 'teslimalansoyad', 'teslimalantelefon','aktif','teslimalanpersonel','teslimalmatarihi')
     actions_on_bottom = True
     actions_on_top = True
